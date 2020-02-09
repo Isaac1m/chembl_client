@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>Fetch Data Here...</h3>
+    <h3>Visualize Data Here...</h3>
   </div>
 </template>
 
