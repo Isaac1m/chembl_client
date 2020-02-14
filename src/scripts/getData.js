@@ -36,17 +36,21 @@ let activities = [];
 
 
 let writeToFile = (activities) => {
-    activities.map(activity => {
-        let data = JSON.stringify(activity, null, 2);
-        fs.appendFile('../../data/db.json', data, (err) => {
-            if (err) throw err;
-            console.log(`Activity written to file`);
-        });
-    })
+    let data = JSON.stringify(activities, null, 2);
+
+    fs.appendFileSync('../../data/db.json', data, (err) => {
+        if (err) throw err;
+        // console.log(`Activity written to file`);
+    });
+
+
+
+
 
 }
 
 let getData = () => {
+    let activities = [];
     targets.map(target => {
         axios.get(
             `https://www.ebi.ac.uk/chembl/api/data/activity.json?target_chembl_id=${target}`
@@ -55,15 +59,18 @@ let getData = () => {
                 response.data.activities.map(activity => {
                     if (molecules.includes(activity.molecule_chembl_id) && activity.pchembl_value != null) {
                         activities.push(activity)
+
                     }
                 })
-
                 writeToFile(activities);
             })
             .catch(error => {
                 console.error(`Error fetching activities: ${error}`);
             });
-    })
+
+
+    }
+    )
 }
 
 
